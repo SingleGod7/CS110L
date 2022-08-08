@@ -1,9 +1,12 @@
 # CS 110L Spring 2020 starter code
 
-Assignment handouts are available [here](https://reberhardt.com/cs110l/spring-2020/).
+**begin date**:2022/8/8
+- [x]week1 assignment **finish date** 2022/8/8
+- [ ]week2 assignment
+- [ ]week3 assignment
+- [ ]week4 assignment
+- [ ]week5 assignment
+- [ ]week6 assignment
 
-Trying out these assignments? Adapting these for a class? [Please let us
-know](mailto:ryan@reberhardt.com); we'd love to hear from you!
-
-Please don't post solution code publicly on the internet. We have plagiarism
-detection tools, but we'd rather make it hard to plagiarize in the first place.
+- [ ]proj1
+- [ ]proj2
