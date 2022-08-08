@@ -27,6 +27,26 @@ fn pick_a_random_word() -> String {
     String::from(words[rand::thread_rng().gen_range(0, words.len())].trim())
 }
 
+fn get_guess_word(word: &Vec<char>, guess: &Vec<bool>) -> String {
+    let mut ans = String::from("");
+    for i in 0..guess.len() {
+        if guess[i] {
+            ans.push(word[i]);
+        } else {
+            ans.push('-');
+        }
+    }
+    ans
+}
+
+fn concente_char(v : &Vec<char>) -> String {
+    let mut ans = String::from("");
+    for i in v {
+        ans.push(*i);
+    }
+    ans
+}
+
 fn main() {
     let secret_word = pick_a_random_word();
     // Note: given what you know about Rust so far, it's easier to pull characters out of a
@@ -36,5 +56,62 @@ fn main() {
     // Uncomment for debugging:
     // println!("random word: {}", secret_word);
 
-    // Your code here! :)
+    let mut count: u32 = NUM_INCORRECT_GUESSES;
+    let mut guess_right_words: Vec<bool> = Vec::new();
+    let mut guess_words: Vec<char> = Vec::new();
+
+    for _ in 0..secret_word_chars.len() {
+        guess_right_words.push(false);
+    } 
+
+    let mut win_game: bool = false;
+
+    while count > 0 && !win_game {
+        println!("The word so far is {}", get_guess_word(&secret_word_chars, &guess_right_words));
+        println!("You have guessed the following letters:{}", concente_char(&guess_words));
+        println!("You have {} guesses left", count);
+
+        print!("Please guess a letter: ");
+
+        io::stdout()
+            .flush()
+            .expect("Error flushing stdout.");
+        let mut guess = String::new();
+        io::stdin()
+            .read_line(&mut guess)
+            .expect("Error reading line.");
+
+        let input_words = if let Some(input_words) = guess.chars().nth(0) {input_words} else {panic!("Can't read the input!")};
+        guess_words.push(input_words);
+
+        let mut correct: bool = false;
+        for i in 0..secret_word_chars.len() {
+            if input_words == secret_word_chars[i] {
+                correct = true;
+                guess_right_words[i] = true;
+            }
+        }
+
+        if !correct {
+            count -= 1;
+            println!("Sorry, that letter is not in the word");
+        }
+
+        for i in 0..guess_right_words.len() {
+            if guess_right_words[i] == false {
+                break
+            }
+            if i == guess_right_words.len() - 1 {
+                win_game = true;
+            }
+        }
+
+        println!("");
+    } 
+
+    if win_game {
+        println!("Congratulations you guessed the secret word: {}!", secret_word)
+    } else {
+        println!("Sorry, you ran out of guesses!")
+    }
 }
